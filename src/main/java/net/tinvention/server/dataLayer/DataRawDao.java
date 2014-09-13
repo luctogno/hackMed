@@ -1,6 +1,5 @@
 package net.tinvention.server.dataLayer;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,39 +11,20 @@ import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
 
 @Repository
-public class DataManager {
+public class DataRawDao extends AbstractMongoDao{
 
-	private final String connectionString = "mongodb://127.0.0.1:27017/";
+	private final String connectionString = "mongodb://192.168.205.178:27017/";
 	private final String dbNameTinSleep = "TinSleep";
 	private final String dataRawCollectionName = "dataRaw";
 	private final String dataAnalizedCollectionName = "dataAnalized";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	private DBCollection mongoConnect(String collectionName)
-	{
-		MongoClient client;
-
-		try {
-			MongoClientURI uri = new MongoClientURI(connectionString);
-			client = new MongoClient(uri);
-			DB db = client.getDB(dbNameTinSleep);
-			DBCollection collection = db.getCollection(collectionName);
-			return collection;
-		} catch (UnknownHostException e) {
-			logger.error("connection failure " + e.getMessage(), e);
-			return null;
-		}
-	}
 
 	public DataRaw GetDataRawForId(ObjectId id){
 		try {

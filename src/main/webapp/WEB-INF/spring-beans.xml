@@ -11,6 +11,7 @@
  <context:component-scan base-package="net.tinvention.server.controller" />
  <context:component-scan base-package="net.tinvention.server.dataLayer" />
  <context:component-scan base-package="net.tinvention.server.businessLayer" />
+ <context:component-scan base-package="net.tinvention.server.scheduler" />
  
  <context:property-placeholder location="classpath:enviroment.properties" />
  
