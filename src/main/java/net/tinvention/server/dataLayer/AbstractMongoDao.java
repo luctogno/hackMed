@@ -10,6 +10,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 
 public abstract class AbstractMongoDao<T extends BaseModel> {
 
@@ -23,6 +24,8 @@ public abstract class AbstractMongoDao<T extends BaseModel> {
 
 		try {
 			client = new MongoClient(connectionString);
+			MongoClientURI uri = new MongoClientURI(connectionString);
+			client = new MongoClient(uri);
 			DB db = client.getDB(dbNameTinSleep);
 			DBCollection collection = db.getCollection(collectionName);
 			return collection;
