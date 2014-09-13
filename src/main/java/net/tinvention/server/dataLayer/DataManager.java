@@ -39,7 +39,7 @@ public class DataManager {
 			DBCollection collection = db.getCollection(collectionName);
 			return collection;
 		} catch (UnknownHostException e) {
-			logger.error("connection failure "+ e.getMessage());
+			logger.error("connection failure " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -48,7 +48,7 @@ public class DataManager {
 		try {
 			return fromMongo(mongoConnect(dataRawCollectionName).findOne(id));
 		} catch (MongoException e) {
-			logger.error("mongo exception - "+ e.getMessage());
+			logger.error("mongo exception - " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -68,7 +68,7 @@ public class DataManager {
 			return toReturn;
 
 		} catch (MongoException e) {
-			logger.error("mongo exception - "+ e.getMessage());
+			logger.error("mongo exception - " + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -78,7 +78,7 @@ public class DataManager {
 		try {
 			mongoConnect(dataRawCollectionName).insert(toMongo(dR));
 		} catch (MongoException e) {
-			logger.error("mongo exception - "+ e.getMessage());
+			logger.error("mongo exception - " + e.getMessage(), e);
 
 		}
 	}
@@ -105,12 +105,30 @@ public class DataManager {
 		BasicDBObject obj = new BasicDBObject();
 
 		data.setId(obj.getObjectId("id"));
-		data.setAccX(obj.getInt("accX"));
-		data.setAccY(obj.getInt("accY"));
-		data.setAccZ(obj.getInt("accZ"));
-		data.setTimestamp(obj.getDouble(""));
+
+		int accX = obj.getInt("accX", Integer.MIN_VALUE);
+		if (accX != Integer.MIN_VALUE) {
+			data.setAccX(accX);
+		}
+
+		int accY = obj.getInt("accY", Integer.MIN_VALUE);
+		if (accY != Integer.MIN_VALUE) {
+			data.setAccY(accY);
+		}
+
+		int accZ = obj.getInt("accZ", Integer.MIN_VALUE);
+		if (accZ != Integer.MIN_VALUE) {
+			data.setAccZ(accZ);
+		}
+
+		data.setTimestamp(obj.getDouble("timestamp"));
+
 		data.setType(EventType.valueOf(obj.getString("type")));
-		data.setValue(new Float(obj.getDouble("value")));
+
+		double value = obj.getDouble("value", Double.MIN_VALUE);
+		if (value != Double.MIN_VALUE) {
+			data.setValue(new Float(value));
+		}
 
 		return data;
 	}
