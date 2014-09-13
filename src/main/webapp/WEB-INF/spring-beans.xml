@@ -9,9 +9,9 @@
  <context:annotation-config />
  
  <context:component-scan base-package="net.tinvention.server.controller" />
+ <context:component-scan base-package="net.tinvention.server.dataLayer" />
+ <context:component-scan base-package="net.tinvention.server.businessLayer" />
  
  <context:property-placeholder location="classpath:enviroment.properties" />
- 
- <bean id="dataManager" class="net.tinvention.server.dataLayer.DataManager" />
  
 </beans>

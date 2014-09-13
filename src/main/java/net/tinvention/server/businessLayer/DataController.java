@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import net.tinvention.server.dataLayer.DataManager;
 import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.Event;
 import net.tinvention.server.model.EventType;
 
+@Service
 public class DataController {
 
 	@Autowired
