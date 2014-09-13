@@ -3,7 +3,7 @@
 	<div id="header" class="container">
 		<div id="logo">
 			<h1>
-				<a href="#">SERVER</a>
+				<a href="#">TinSleep</a>
 			</h1>
 		</div>
 		<tiles:insertAttribute name="menu" />

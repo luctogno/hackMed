@@ -48,6 +48,33 @@ a
 	color: #2C383B;
 }
 
+li.homeTabs a
+{
+	background-color: #CCC;
+}
+
+.timeline-content
+{
+	background-color: #EEE;
+}
+
+.timeline-axis-grid-minor
+{
+	border-top-color: #BFBFBF;
+	border-right-color: #BFBFBF;
+	border-bottom-color: #BFBFBF;
+	border-left-color: #BFBFBF;
+}
+
+.timeline-axis-grid-major
+{
+	border-top-color: #AAAAAA;
+	border-right-color: #AAAAAA;
+	border-bottom-color: #AAAAAA;
+	border-left-color: #AAAAAA;
+}
+
+
 a:hover
 {
 	text-decoration: none;

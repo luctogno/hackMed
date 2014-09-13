@@ -15,4 +15,14 @@
 <c:url value="/css/default.css" var="css"/>
 <link rel="stylesheet" href="${css}">
 
+<!-- TimeLine -->
+<c:url value="http://www.google.com/jsapi" var="googleJsapi"/>
+<script src="${googleJsapi}"></script>
+<c:url value="/js/timeline.js" var="timeLineJs"/>
+<script src="${timeLineJs}"></script>
+<c:url value="/js/timeLineController.js" var="timeLineController"/>
+<script src="${timeLineController}"></script>
+<c:url value="/css/timeline.css" var="timeLineCss"/>
+<link rel="stylesheet" href="${timeLineCss}">
+
 <title>${title eq null ? "SERVER" : "title" }</title>
