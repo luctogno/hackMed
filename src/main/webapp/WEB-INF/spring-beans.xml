@@ -6,7 +6,7 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
  
- <context:component-scan base-package="net.tinvention.tinSleep.controller" />
+ <context:component-scan base-package="net.tinvention.TinSleep.Server.controller" />
  
  <context:property-placeholder location="classpath:enviroment.properties" />
  

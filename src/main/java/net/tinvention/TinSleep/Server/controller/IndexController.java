@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class IndexController {
 
-		@Autowired
+		//@Autowired
 		//private ArduinoMexManager arduinoMexManager;
 			
 		@RequestMapping(value="/index.html", method = RequestMethod.GET)
 		public String welcome(ModelMap model) throws InterruptedException {
-
 			return "index";
 		}
 }
