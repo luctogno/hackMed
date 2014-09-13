@@ -72,6 +72,30 @@ public class DataManager {
 			return null;
 		}
 	}
+	
+	public List<DataRaw> GetDataRaw(EventType type, int number){
+		try {
+
+			BasicDBObject example = new BasicDBObject();
+			BasicDBObject sort = new BasicDBObject();
+			example.put("type", type);
+			sort.put("timestamp", -1);
+			DBCursor cursor = mongoConnect(dataRawCollectionName).find(example).sort(sort).limit(number);
+			List<DataRaw> toReturn = new ArrayList<DataRaw>();
+
+			while( cursor.hasNext())
+			{
+				DBObject obj = cursor.next();
+				toReturn.add(fromMongo(obj));
+			}
+
+			return toReturn;
+
+		} catch (MongoException e) {
+			logger.error("mongo exception - "+ e.getMessage());
+			return null;
+		}
+	}
 
 	public void InsertDataRaw(DataRaw dR)
 	{
