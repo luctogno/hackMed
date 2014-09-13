@@ -4,33 +4,69 @@ import org.bson.types.ObjectId;
 
 public class DataRaw{
 
+	private ObjectId id;
+
+	private EventType type;
+	private float value;
+	private int accX;
+	private int accY;
+	private int accZ;
+	private double timestamp;
+
 	public ObjectId getId() {
 		return id;
 	}
+
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
-	public int getMinPressure() {
-		return minPressure;
+
+	public EventType getType() {
+		return type;
 	}
-	public void setMinPressure(int minPressure) {
-		this.minPressure = minPressure;
+
+	public void setType(EventType type) {
+		this.type = type;
 	}
-	public int getMaxPressure() {
-		return maxPressure;
+
+	public float getValue() {
+		return value;
 	}
-	public void setMaxPressure(int maxPressure) {
-		this.maxPressure = maxPressure;
+
+	public void setValue(float value) {
+		this.value = value;
 	}
-	public double getConduttanza() {
-		return conduttanza;
+
+	public int getAccX() {
+		return accX;
 	}
-	public void setConduttanza(double conduttanza) {
-		this.conduttanza = conduttanza;
+
+	public void setAccX(int accX) {
+		this.accX = accX;
 	}
-	
-	private ObjectId id;
-	private int minPressure;
-	private int maxPressure;
-	private double conduttanza; 
+
+	public int getAccY() {
+		return accY;
+	}
+
+	public void setAccY(int accY) {
+		this.accY = accY;
+	}
+
+	public int getAccZ() {
+		return accZ;
+	}
+
+	public void setAccZ(int accZ) {
+		this.accZ = accZ;
+	}
+
+	public double getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(double timestamp) {
+		this.timestamp = timestamp;
+	}
+
 }
