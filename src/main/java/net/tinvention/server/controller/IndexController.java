@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 
@@ -33,7 +34,7 @@ public class IndexController {
 		
 		@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
 		@ResponseStatus(HttpStatus.OK)
-		public List<Alert> getAlertList() {
+		public @ResponseBody List<Alert> getAlertList() {
 			return dc.getAlertList();
 		}
 		

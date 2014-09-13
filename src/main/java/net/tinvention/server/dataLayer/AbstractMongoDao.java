@@ -17,6 +17,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
 
 public abstract class AbstractMongoDao {
@@ -31,7 +32,8 @@ public abstract class AbstractMongoDao {
 		MongoClient client;
 
 		try {
-			client = new MongoClient(connectionString);
+			MongoClientURI uri = new MongoClientURI(connectionString);
+			client = new MongoClient(uri);
 			DB db = client.getDB(dbNameTinSleep);
 			DBCollection collection = db.getCollection(collectionName);
 			return collection;
