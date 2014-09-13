@@ -2,7 +2,8 @@ package net.tinvention.server.controller;
 
 import java.util.List;
 
-import net.tinvention.server.businessLayer.DataController;
+import net.tinvention.server.businessLayer.DataManager;
+import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.Event;
 
@@ -20,11 +21,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/")
 public class IndexController {
 
-		//@Autowired
-		//private ArduinoMexManager arduinoMexManager;
 	
 		@Autowired
-		private DataController dc;
+		private DataManager dc;
 			
 		@RequestMapping(value="/index.html", method = RequestMethod.GET)
 		public String welcome(ModelMap model) throws InterruptedException {
@@ -32,15 +31,16 @@ public class IndexController {
 		}
 		
 		
-		@RequestMapping(value = "/eventList", method = RequestMethod.GET, produces = { "application/json" })
+		@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
 		@ResponseStatus(HttpStatus.OK)
-		public List<List<Event>> getEventsList() {
-			return dc.getEvents();
+		public List<Alert> getAlertList() {
+			return dc.getAlertList();
 		}
 		
 		@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
 		@ResponseStatus(HttpStatus.OK)
 		public void insert(@RequestBody List<DataRaw> raw) {
+			System.out.println("ok");
 //			return dc.getEvents();
 		}
 	}
