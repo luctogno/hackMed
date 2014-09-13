@@ -1,4 +1,4 @@
-package net.tinvention.TinSleep.Server.controller;
+package net.tinvention.server.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
