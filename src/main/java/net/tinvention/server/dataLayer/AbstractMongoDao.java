@@ -23,7 +23,6 @@ public abstract class AbstractMongoDao<T extends BaseModel> {
 		MongoClient client;
 
 		try {
-			client = new MongoClient(connectionString);
 			MongoClientURI uri = new MongoClientURI(connectionString);
 			client = new MongoClient(uri);
 			DB db = client.getDB(dbNameTinSleep);

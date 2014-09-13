@@ -75,7 +75,7 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 		}
 	}
 
-	public void InsertDataRaw(DataRaw dR) {
+	public void InsertDataRaw(List<DataRaw> dR) {
 		try {
 			mongoConnect(dataRawCollectionName).insert(toMongo(dR));
 		} catch (MongoException e) {
@@ -84,16 +84,26 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 		}
 	}
 
+	private List<DBObject> toMongo(List<DataRaw> data) {
+		List<DBObject> result = new ArrayList<DBObject>();
+
+		for (DataRaw item : data) {
+			result.add(toMongo(item));
+		}
+
+		return result;
+	}
+
 	@Override
 	protected DBObject toMongo(DataRaw data) {
 		DBObject obj = new BasicDBObject();
 
-		obj.put("id", data.getId());
+		obj.put("_id", data.getId());
 		obj.put("accX", data.getAccX());
 		obj.put("accY", data.getAccY());
 		obj.put("accZ", data.getAccZ());
 		obj.put("timestamp", data.getTimestamp());
-		obj.put("type", data.getType());
+		obj.put("type", data.getType().name());
 		obj.put("value", data.getValue());
 
 		return obj;
@@ -105,7 +115,7 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 
 		BasicDBObject obj = (BasicDBObject) objectDB;
 
-		data.setId(obj.getObjectId("id"));
+		data.setId(obj.getObjectId("_id"));
 
 		int accX = obj.getInt("accX", Integer.MIN_VALUE);
 		if (accX != Integer.MIN_VALUE) {

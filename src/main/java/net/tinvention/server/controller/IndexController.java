@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class IndexController {
 
 	@Autowired
-	private DataManager dc;
+	private DataManager dm;
 
 	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public String welcome(ModelMap model) throws InterruptedException {
@@ -31,20 +31,14 @@ public class IndexController {
 	@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
 	@ResponseStatus(HttpStatus.OK)
 	public @ResponseBody List<Alert> getAlertList() {
-		return dc.getAlertList();
+		return dm.getAlertList();
 	}
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
 	@ResponseStatus(HttpStatus.OK)
 	public void insert(@RequestBody List<DataRaw> raw) {
-		System.out.println("ok");
-		// return dc.getEvents();
-	}
-
-	@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
-	@ResponseStatus(HttpStatus.OK)
-	public void insert(@RequestBody String raw) {
-		// System.out.println(raw);
+		System.out.println(raw.size());
+		dm.insert(raw);
 		// return dc.getEvents();
 	}
 }

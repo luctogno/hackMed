@@ -90,7 +90,7 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 	protected DBObject toMongo(Alert data) {
 		DBObject obj = new BasicDBObject();
 
-		obj.put("id", data.getId());
+		obj.put("_id", data.getId());
 		obj.put("description", data.getDescription());
 		obj.put("severity", data.getSeverity().name());
 		obj.put("timestamp", data.getTimestamp());
@@ -105,7 +105,7 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 
 		BasicDBObject obj = (BasicDBObject) objectDB;
 
-		alert.setId(obj.getObjectId("id"));
+		alert.setId(obj.getObjectId("_id"));
 
 		String severity = obj.getString("description");
 		if (!StringUtils.isEmpty(severity)) {
