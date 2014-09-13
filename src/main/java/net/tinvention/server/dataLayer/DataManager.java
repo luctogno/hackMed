@@ -17,12 +17,13 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.MongoException;
 
 @Repository
 public class DataManager {
 
-	private final String connectionString = "mongodb://192.168.205.178:27017/";
+	private final String connectionString = "mongodb://127.0.0.1:27017/";
 	private final String dbNameTinSleep = "TinSleep";
 	private final String dataRawCollectionName = "dataRaw";
 	private final String dataAnalizedCollectionName = "dataAnalized";
@@ -34,7 +35,8 @@ public class DataManager {
 		MongoClient client;
 
 		try {
-			client = new MongoClient(connectionString);
+			MongoClientURI uri = new MongoClientURI(connectionString);
+			client = new MongoClient(uri);
 			DB db = client.getDB(dbNameTinSleep);
 			DBCollection collection = db.getCollection(collectionName);
 			return collection;
@@ -78,7 +80,7 @@ public class DataManager {
 
 			BasicDBObject example = new BasicDBObject();
 			BasicDBObject sort = new BasicDBObject();
-			example.put("type", type);
+			example.put("type", type.name());
 			sort.put("timestamp", -1);
 			DBCursor cursor = mongoConnect(dataRawCollectionName).find(example).sort(sort).limit(number);
 			List<DataRaw> toReturn = new ArrayList<DataRaw>();

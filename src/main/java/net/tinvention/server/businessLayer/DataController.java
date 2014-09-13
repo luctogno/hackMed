@@ -13,6 +13,8 @@ import net.tinvention.server.model.EventType;
 
 @Service
 public class DataController {
+	
+	private final int EVENT_NUMBER = 50;
 
 	@Autowired
 	private DataManager dm;
@@ -21,7 +23,7 @@ public class DataController {
 		List<List<Event>> eventsList = new ArrayList<>();
 		
 		List<Event> ACC = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.ACC, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRaw(EventType.ACC, EVENT_NUMBER)){ //Ultimi 50 elementi per tipo
 			Event ev = new Event();
 			ev.setType(EventType.ACC);
 			ev.setTimestamp(raw.getTimestamp());
@@ -32,7 +34,7 @@ public class DataController {
 		eventsList.add(ACC);
 		
 		List<Event> TEMP = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.TEMP, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRaw(EventType.TEMP, EVENT_NUMBER)){ //Ultimi 50 elementi per tipo
 			Event ev = new Event();
 			ev.setType(EventType.TEMP);
 			ev.setTimestamp(raw.getTimestamp());
@@ -41,7 +43,7 @@ public class DataController {
 		eventsList.add(TEMP);
 		
 		List<Event> BVP = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.BVP, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRaw(EventType.BVP, EVENT_NUMBER)){ //Ultimi 50 elementi per tipo
 			Event ev = new Event();
 			ev.setType(EventType.BVP);
 			ev.setTimestamp(raw.getTimestamp());
@@ -50,7 +52,7 @@ public class DataController {
 		eventsList.add(BVP);
 		
 		List<Event> GSR = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.GSR, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRaw(EventType.GSR, EVENT_NUMBER)){ //Ultimi 50 elementi per tipo
 			Event ev = new Event();
 			ev.setType(EventType.GSR);
 			ev.setTimestamp(raw.getTimestamp());
@@ -59,7 +61,7 @@ public class DataController {
 		eventsList.add(GSR);
 		
 		List<Event> IBI = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.IBI, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRaw(EventType.IBI, EVENT_NUMBER)){ //Ultimi 50 elementi per tipo
 			Event ev = new Event();
 			ev.setType(EventType.IBI);
 			ev.setTimestamp(raw.getTimestamp());
