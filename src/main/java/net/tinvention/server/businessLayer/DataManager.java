@@ -99,7 +99,7 @@ public class DataManager {
 	}
 
 	public void insert(List<DataRaw> list) {
-		dm.InsertDataRaw(list);
+		dm.InsertData(list);
 	}
 
 }

@@ -77,15 +77,6 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		}
 	}
 
-	public void InsertDataRaw(Alert dR) {
-		try {
-			mongoConnect(dataRawCollectionName).insert(toMongo(dR));
-		} catch (MongoException e) {
-			logger.error("mongo exception - " + e.getMessage(), e);
-
-		}
-	}
-
 	@Override
 	protected DBObject toMongo(Alert data) {
 		DBObject obj = new BasicDBObject();
@@ -115,5 +106,10 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		alert.setTitle(obj.getString("title"));
 
 		return alert;
+	}
+
+	@Override
+	public String getDataRawCollectionName() {
+		return dataRawCollectionName;
 	}
 }

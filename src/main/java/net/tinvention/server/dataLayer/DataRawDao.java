@@ -19,6 +19,12 @@ import com.mongodb.MongoException;
 public class DataRawDao extends AbstractMongoDao<DataRaw> {
 
 	private final String dataRawCollectionName = "dataRaw";
+
+	@Override
+	public String getDataRawCollectionName() {
+		return dataRawCollectionName;
+	}
+
 	private final String dataAnalizedCollectionName = "dataAnalized";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
@@ -73,25 +79,6 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 			logger.error("mongo exception - " + e.getMessage());
 			return null;
 		}
-	}
-
-	public void InsertDataRaw(List<DataRaw> dR) {
-		try {
-			mongoConnect(dataRawCollectionName).insert(toMongo(dR));
-		} catch (MongoException e) {
-			logger.error("mongo exception - " + e.getMessage(), e);
-
-		}
-	}
-
-	private List<DBObject> toMongo(List<DataRaw> data) {
-		List<DBObject> result = new ArrayList<DBObject>();
-
-		for (DataRaw item : data) {
-			result.add(toMongo(item));
-		}
-
-		return result;
 	}
 
 	@Override

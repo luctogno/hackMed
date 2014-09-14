@@ -1,6 +1,8 @@
 package net.tinvention.server.dataLayer;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.tinvention.server.model.BaseModel;
 
@@ -11,6 +13,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.MongoException;
 
 public abstract class AbstractMongoDao<T extends BaseModel> {
 
@@ -37,5 +40,25 @@ public abstract class AbstractMongoDao<T extends BaseModel> {
 	protected abstract T fromMongo(DBObject objectDB);
 
 	protected abstract DBObject toMongo(T data);
+
+	protected List<DBObject> toMongo(List<T> data) {
+		List<DBObject> result = new ArrayList<DBObject>();
+
+		for (T item : data) {
+			result.add(toMongo(item));
+		}
+
+		return result;
+	}
+
+	public void InsertData(List<T> dR) {
+		try {
+			mongoConnect(getDataRawCollectionName()).insert(toMongo(dR));
+		} catch (MongoException e) {
+			logger.error("mongo exception - " + e.getMessage(), e);
+		}
+	}
+
+	public abstract String getDataRawCollectionName();
 
 }
