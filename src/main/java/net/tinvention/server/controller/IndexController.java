@@ -15,34 +15,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
-	
-		@Autowired
-		private DataManager dc;
-			
-		@RequestMapping(value="/index.html", method = RequestMethod.GET)
-		public String welcome(ModelMap model) throws InterruptedException {
-			return "index";
-		}
-		
-		
-		@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
-		@ResponseStatus(HttpStatus.OK)
-		public @ResponseBody List<Alert> getAlertList() {
-			List<Alert> alertList = dc.getAlertList();
-			return alertList;
-		}
-		
-		@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
-		@ResponseStatus(HttpStatus.OK)
-		public void insert(@RequestBody List<DataRaw> raw) {
-			System.out.println("ok");
-			dc.insert(raw);
-//			return dc.getEvents();
-		}
+	@Autowired
+	private DataManager dc;
+
+	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
+	public ModelAndView welcome(ModelMap model) throws InterruptedException {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("index");
+
+		List<Alert> storicoList = dc.getAlertList();
+		List<Alert> alertList = dc.getAlertList(5);
+
+		Gson gson = new Gson();
+
+		String storicoJson = gson.toJson(storicoList);
+		mav.addObject("storico", storicoJson);
+
+		String alertJson = gson.toJson(alertList);
+		mav.addObject("alerts", alertJson);
+
+		return mav;
 	}
+
+	@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
+	@ResponseStatus(HttpStatus.OK)
+	public @ResponseBody List<Alert> getAlertList() {
+		List<Alert> alertList = dc.getAlertList();
+		return alertList;
+	}
+
+	@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
+	@ResponseStatus(HttpStatus.OK)
+	public void insert(@RequestBody List<DataRaw> raw) {
+		System.out.println("ok");
+		dc.insert(raw);
+		// return dc.getEvents();
+	}
+}
