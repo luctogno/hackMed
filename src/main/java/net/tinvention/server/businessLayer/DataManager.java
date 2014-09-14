@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import net.tinvention.server.dataLayer.AlertDao;
 import net.tinvention.server.dataLayer.DataRawDao;
 import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
@@ -19,10 +20,12 @@ public class DataManager {
 
 	@Autowired
 	private DataRawDao dm;
+	
+	@Autowired
+	private AlertDao dmAlert;
 
 	public List<Alert> getAlertList(){
-		// TODO lista completa degli alert
-		return new ArrayList<Alert>();
+		return dmAlert.GetDataRaw();
 	}
 
 	public List<List<DataRaw>> getEventList(){
@@ -112,9 +115,13 @@ public class DataManager {
 			}
 		}
 		
-		//TODO: save
+		dmAlert.InsertData(alertList);
 
 		return alertList;
+	}
+	
+	public void insert(List<DataRaw> data){
+		dm.InsertData(data);
 	}
 
 }

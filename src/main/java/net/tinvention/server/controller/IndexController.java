@@ -16,33 +16,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+
 @Controller
 @RequestMapping("/")
 public class IndexController {
 
-	@Autowired
-	private DataManager dm;
-
-	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
-	public String welcome(ModelMap model) throws InterruptedException {
-		List<Alert> toReturn = dm.getAlertList();
-		model.put("alarms", toReturn);
-		return "index";
+	
+		@Autowired
+		private DataManager dc;
+			
+		@RequestMapping(value="/index.html", method = RequestMethod.GET)
+		public String welcome(ModelMap model) throws InterruptedException {
+			return "index";
+		}
+		
+		
+		@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
+		@ResponseStatus(HttpStatus.OK)
+		public @ResponseBody List<Alert> getAlertList() {
+			List<Alert> alertList = dc.getAlertList();
+			return alertList;
+		}
+		
+		@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
+		@ResponseStatus(HttpStatus.OK)
+		public void insert(@RequestBody List<DataRaw> raw) {
+			System.out.println("ok");
+			dc.insert(raw);
+//			return dc.getEvents();
+		}
 	}
-
-	@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
-	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<Alert> getAlertList() {
-		return dm.getAlertList();
-	}
-
-	@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })
-	@ResponseStatus(HttpStatus.OK)
-	public void insert(@RequestBody List<DataRaw> raw) {
-		System.out.println(raw.size());
-		dm.insert(raw);
-		// return dc.getEvents();
-	}
-}
-
-
