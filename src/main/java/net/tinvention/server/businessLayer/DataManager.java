@@ -1,7 +1,6 @@
 package net.tinvention.server.businessLayer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -9,11 +8,9 @@ import java.util.List;
 import net.tinvention.server.dataLayer.DataRawDao;
 import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
-import net.tinvention.server.model.Event;
 import net.tinvention.server.model.EventType;
 import net.tinvention.server.utils.PeakDetector;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +25,12 @@ public class DataManager {
 		return new ArrayList<Alert>();
 	}
 
-	public List<List<Event>> getEventList(){
-		List<List<Event>> resultList = new ArrayList<>();
+	public List<List<DataRaw>> getEventList(){
+		List<List<DataRaw>> resultList = new ArrayList<>();
 		
-		List<Event> ACC = new ArrayList<>();
+		List<DataRaw> ACC = new ArrayList<>();
 		for(DataRaw raw : dm.GetDataRaw(EventType.ACC, 50)){ //Ultimi 50 elementi per tipo
-			Event ev = new Event();
+			DataRaw ev = new DataRaw();
 			ev.setType(EventType.ACC);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setAccX(raw.getAccX());
@@ -42,36 +39,36 @@ public class DataManager {
 		}
 		resultList.add(ACC);
 		
-		List<Event> TEMP = new ArrayList<>();
+		List<DataRaw> TEMP = new ArrayList<>();
 		for(DataRaw raw : dm.GetDataRaw(EventType.TEMP, 50)){ //Ultimi 50 elementi per tipo
-			Event ev = new Event();
+			DataRaw ev = new DataRaw();
 			ev.setType(EventType.TEMP);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
 		}
 		resultList.add(TEMP);
 		
-		List<Event> BVP = new ArrayList<>();
+		List<DataRaw> BVP = new ArrayList<>();
 		for(DataRaw raw : dm.GetDataRaw(EventType.BVP, 50)){ //Ultimi 50 elementi per tipo
-			Event ev = new Event();
+			DataRaw ev = new DataRaw();
 			ev.setType(EventType.BVP);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
 		}
 		resultList.add(BVP);
 		
-		List<Event> GSR = new ArrayList<>();
+		List<DataRaw> GSR = new ArrayList<>();
 		for(DataRaw raw : dm.GetDataRaw(EventType.GSR, 50)){ //Ultimi 50 elementi per tipo
-			Event ev = new Event();
+			DataRaw ev = new DataRaw();
 			ev.setType(EventType.GSR);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
 		}
 		resultList.add(GSR);
 		
-		List<Event> IBI = new ArrayList<>();
+		List<DataRaw> IBI = new ArrayList<>();
 		for(DataRaw raw : dm.GetDataRaw(EventType.IBI, 50)){ //Ultimi 50 elementi per tipo
-			Event ev = new Event();
+			DataRaw ev = new DataRaw();
 			ev.setType(EventType.IBI);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
@@ -81,7 +78,7 @@ public class DataManager {
 		return resultList;
 	}
 
-	public List<List<Event>> getEventsToBeAggregated(){
+	public List<List<DataRaw>> getEventsToBeAggregated(){
 		return getEventList();
 	}
 
@@ -89,12 +86,12 @@ public class DataManager {
 		return dm.GetDataRaw();
 	}
 
-	public List<Alert> aggregateEvents(List<List<Event>> eventToBeAggregated){
+	public List<Alert> aggregateEvents(List<List<DataRaw>> eventToBeAggregated){
 		List<Alert> alertList = new ArrayList<>();
 		
 		//APNEE
 		List<Float> misure = new ArrayList<>();
-		for(Event e: eventToBeAggregated.get(2)){
+		for(DataRaw e: eventToBeAggregated.get(2)){
 			misure.add(e.getValue());
 		}
 
