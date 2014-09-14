@@ -35,7 +35,8 @@ public class IndexController {
 		@RequestMapping(value = "/alertList", method = RequestMethod.GET, produces = { "application/json" })
 		@ResponseStatus(HttpStatus.OK)
 		public @ResponseBody List<Alert> getAlertList() {
-			return dc.getAlertList();
+			List<Alert> alertList = dc.getAlertList();
+			return alertList;
 		}
 		
 		@RequestMapping(value = "/insert", method = RequestMethod.POST, produces = { "application/json" })

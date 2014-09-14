@@ -49,7 +49,58 @@
 					<div id="mytimeline"><!--  --></div>
 				</div> <!-- timeLine -->
 	</div> <!-- tab-content -->
-      
+     
+    <script type="text/javascript">
+    var timeline;
+	
+	google.load("visualization", "1");
+	
+	// Set callback to run when API is loaded
+	google.setOnLoadCallback(drawVisualization);
+		
+		// Called when the Visualization API is loaded.
+		function drawVisualization() {
+		// Create and populate a data table.
+		var data = [];
+		<c:forEach var="alert" items="${alertList}">
+			data.push({
+				'start' : new Date(${intervento.getRealCreated().getYear() + 1900}, ${intervento.getRealCreated().getMonth()}, ${intervento.getRealCreated().getDate()}),
+				'content' : '${intervento.getName()}',
+				'id' : '${intervento.getId()}',
+				'description' : '${intervento.getDescription()}'
+				// Optional: a field 'end'
+				// Optional: a field 'group'
+				// Optional: a field 'className'
+				// Optional: a field 'editable'
+			});
+		</c:forEach>
+		
+		// specify options
+		var options = {
+		  "width":  "100%",
+		  "height": "400px",
+		  "style": "box" // optional
+		};
+		
+		// Instantiate our timeline object.
+		timeline = new links.Timeline(document.getElementById('mytimeline'));
+		
+		// Draw our timeline with the created data and options
+		timeline.draw(data, options);
+		
+		//La timeline non disegna nulla se inizialmente è in un div nascosto.
+		//Per evitarlo forzo il redraw della timeline al cambio di tab.
+		 $('a[data-toggle="tab"]').on('shown.bs.tab',function(e) {
+			timeline.redraw();
+		});
+		
+		//Triggero il redraw al resize della finestra.
+	    //(Viene chiamata al cambio di orientamento di un tablet).
+		$(window).resize(function() {
+			timeline.redraw();
+		});
+	}
+    </script>
       
     </div>  <!-- Container -->
   </div>
