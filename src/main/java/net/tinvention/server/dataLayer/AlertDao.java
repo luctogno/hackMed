@@ -111,9 +111,4 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		return dataRawCollectionName;
 	}
 	
-	@Override
-	public void InsertData(List<Alert> list) {
-		// TODO Auto-generated method stub
-		
-	}
 }
