@@ -14,7 +14,7 @@
 	<div class="tab-content">
 				<div class="tab-pane active" id="home">
 					<div class="column1 column">
-						<img id="imageSmile" src="img/ok.jpeg" style="width:100%; height: 100%; padding: auto;" onClick="changeImage();"/>
+						<img id="imageSmile" src="img/ok.png" style="width:100%; height: 100%; padding: auto;" onClick="changeImage();"/>
 					</div>
 					<div class="column2 columnBig">
 						<ul class="list-group">
@@ -88,15 +88,13 @@
 			timeline.redraw();
 		});
 	}
+		
+		function changeImage(){
+			$("#imageSmile").attr("src","img/sad.png");
+		}
     </script>
       
     </div>  <!-- Container -->
   </div>
 </div>
-
-<script>
-	function changeImage(){
-		$("#imageSmile").attr("src","img/sad.png");
-	}
-</script>
 
