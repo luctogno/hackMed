@@ -14,6 +14,6 @@ public class NotifyManager {
 	}
 
 	public void notifySevereAlerts(List<Alert> alerts){
-		//TODO
+		//TODO anche su android
 	}
 }
