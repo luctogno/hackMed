@@ -128,4 +128,29 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 
 		return data;
 	}
+
+	public List<DataRaw> GetDataRawAfter(EventType acc, double timeStampACC) {
+		try {
+
+			BasicDBObject example = new BasicDBObject();
+			BasicDBObject sort = new BasicDBObject();
+			example.put("type", acc.name());
+			example.put("timestamp",new BasicDBObject("$gt",timeStampACC ) );	
+			sort.put("timestamp", -1);
+			DBCursor cursor = mongoConnect(dataRawCollectionName).find(example)
+					.sort(sort).limit(5000);
+			List<DataRaw> toReturn = new ArrayList<DataRaw>();
+
+			while (cursor.hasNext()) {
+				DBObject obj = cursor.next();
+				toReturn.add(fromMongo(obj));
+			}
+
+			return toReturn;
+
+		} catch (MongoException e) {
+			logger.error("mongo exception - " + e.getMessage());
+			return null;
+		}
+	}
 }
