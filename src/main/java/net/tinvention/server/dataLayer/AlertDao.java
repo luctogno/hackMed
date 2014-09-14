@@ -21,7 +21,7 @@ import com.mongodb.MongoException;
 @Repository
 public class AlertDao extends AbstractMongoDao<Alert> {
 
-	private final String dataRawCollectionName = "alert";
+	private final String dataRawCollectionName = "dataAnalized";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
@@ -95,7 +95,9 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 
 		alert.setId(obj.getObjectId("_id"));
 
-		String severity = obj.getString("description");
+		alert.setDescription(obj.getString("description"));
+		
+		String severity = obj.getString("severity");
 		if (!StringUtils.isEmpty(severity)) {
 			alert.setSeverity(Severity.valueOf(severity));
 		}
