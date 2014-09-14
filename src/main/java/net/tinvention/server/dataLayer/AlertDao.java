@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.tinvention.server.model.Alert;
+import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.EventType;
 import net.tinvention.server.model.Severity;
 
@@ -53,14 +54,11 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		}
 	}
 
-	public List<Alert> GetDataRaw(EventType type, int number) {
+	public List<Alert> GetDataRaw(int number) {
 		try {
-
-			BasicDBObject example = new BasicDBObject();
 			BasicDBObject sort = new BasicDBObject();
-			example.put("type", type.name());
 			sort.put("timestamp", -1);
-			DBCursor cursor = mongoConnect(dataRawCollectionName).find(example)
+			DBCursor cursor = mongoConnect(dataRawCollectionName).find()
 					.sort(sort).limit(number);
 			List<Alert> toReturn = new ArrayList<Alert>();
 
@@ -111,5 +109,11 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 	@Override
 	public String getDataRawCollectionName() {
 		return dataRawCollectionName;
+	}
+	
+	@Override
+	public void InsertData(List<Alert> list) {
+		// TODO Auto-generated method stub
+		
 	}
 }
