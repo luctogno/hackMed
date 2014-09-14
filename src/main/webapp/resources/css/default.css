@@ -648,7 +648,7 @@ ul.contact li a.icon-rss:before
 {
 	overflow: hidden;
 	padding: 2em 1em;
-	background: #383838;
+	
 	text-align: center;
 }
 
@@ -713,6 +713,10 @@ ul.contact li a.icon-rss:before
 .column1,  .column2,  .column3,  .column4
 {
 	width: 280px;
+}
+
+.columnBig{
+	width: 750px;
 }
 
 .column1,  .column2

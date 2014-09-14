@@ -25,6 +25,8 @@ public class IndexController {
 
 	@RequestMapping(value = "/index.html", method = RequestMethod.GET)
 	public String welcome(ModelMap model) throws InterruptedException {
+		List<Alert> toReturn = dm.getAlertList();
+		model.put("alarms", toReturn);
 		return "index";
 	}
 
@@ -42,3 +44,5 @@ public class IndexController {
 		// return dc.getEvents();
 	}
 }
+
+

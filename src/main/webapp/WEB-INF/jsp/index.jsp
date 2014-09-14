@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <div id="wrapper">
   <div id="featured-wrapper">
     <div id="featured" class="container">
@@ -12,36 +14,22 @@
 	<div class="tab-content">
 				<div class="tab-pane active" id="home">
 					<div class="column1 column">
-						<span class="icon icon-cogs"></span>
-						<div class="title">
-							<h2>Maecenas lectus sapien</h2>
-						</div>
-						<p>In posuere eleifend odio. Quisque semper augue mattis wisi.
-							Pellentesque viverra vulputate enim. Aliquam erat volutpat.</p>
+						<img id="imageSmile" src="img/ok.jpeg" style="width:100%; height: 100%; padding: auto;" onClick="changeImage();"/>
 					</div>
-					<div class="column2 column">
-						<span class="icon icon-legal"></span>
-						<div class="title">
-							<h2>Praesent scelerisque</h2>
-						</div>
-						<p>In posuere eleifend odio. Quisque semper augue mattis wisi.
-							Pellentesque viverra vulputate enim. Aliquam erat volutpat.</p>
-					</div>
-					<div class="column3 column">
-						<span class="icon icon-unlock"></span>
-						<div class="title">
-							<h2>Fusce ultrices fringilla</h2>
-						</div>
-						<p>In posuere eleifend odio. Quisque semper augue mattis wisi.
-							Pellentesque viverra vulputate enim. Aliquam erat volutpat.</p>
-					</div>
-					<div class="column4 column">
-						<span class="icon icon-wrench"></span>
-						<div class="title">
-							<h2>Etiam posuere augue</h2>
-						</div>
-						<p>In posuere eleifend odio. Quisque semper augue mattis wisi.
-							Pellentesque viverra vulputate enim. Aliquam erat volutpat.</p>
+					<div class="column2 columnBig">
+						<ul class="list-group">
+						<c:forEach var="listVar" items="${alarms}"> //add the model attribute of list in items
+						<c:if test="${listVar.severity eq 'LOW'}">
+ 							<li class="list-group-item list-group-item-info"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+						</c:if>
+						<c:if test="${listVar.severity eq 'MEDIUM'}">
+ 							<li class="list-group-item list-group-item-warning"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+						</c:if>
+						<c:if test="${listVar.severity eq 'HIGH'}">
+ 							<li class="list-group-item list-group-item-danger"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+						</c:if> 
+					</c:forEach>
+						</ul>
 					</div>
 				</div> <!-- home -->
 				
@@ -54,4 +42,10 @@
     </div>  <!-- Container -->
   </div>
 </div>
+
+<script>
+	function changeImage(){
+		$("#imageSmile").attr("src","img/sad.png");
+	}
+</script>
 
