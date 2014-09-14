@@ -41,6 +41,7 @@ public class IndexController {
 		// alert.setTimestamp(new Date());
 		// alert.setTitle("title");
 		// storicoList.add(alert);
+
 		mav.addObject("storico", storicoList);
 
 		// String alertJson = gson.toJson(alertList);

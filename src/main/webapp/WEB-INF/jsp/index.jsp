@@ -73,7 +73,7 @@
 		var data = [];
 		<c:forEach var="alert" items="${storico}">
 			data.push({
-				'start' : new Date(),
+				'start' : new Date('${alert.timestampYear}', '${alert.timestampMonth - 1}', '${alert.timestampDay}'),
 				'content' : '${alert.title}',
 				'id' : '${alert.id}',
 				'description' : '${alert.description}'
