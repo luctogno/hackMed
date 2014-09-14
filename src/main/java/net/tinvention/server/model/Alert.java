@@ -1,5 +1,6 @@
 package net.tinvention.server.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Alert extends BaseModel {
@@ -41,4 +42,30 @@ public class Alert extends BaseModel {
 		this.timestamp = timestamp;
 	}
 
+	public int getTimestampYear() {
+		if (timestamp == null) {
+			return 0;
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(timestamp);
+		return c.get(Calendar.YEAR);
+	}
+
+	public int getTimestampMonth() {
+		if (timestamp == null) {
+			return 0;
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(timestamp);
+		return c.get(Calendar.MONTH);
+	}
+
+	public int getTimestampDay() {
+		if (timestamp == null) {
+			return 0;
+		}
+		Calendar c = Calendar.getInstance();
+		c.setTime(timestamp);
+		return c.get(Calendar.DAY_OF_MONTH);
+	}
 }

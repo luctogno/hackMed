@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-
 @Controller
 @RequestMapping("/")
 public class IndexController {
@@ -34,12 +32,19 @@ public class IndexController {
 		List<Alert> storicoList = dc.getAlertList();
 		List<Alert> alertList = dc.getAlertList(5);
 
-		Gson gson = new Gson();
+		// Gson gson = new Gson();
+		// String storicoJson = gson.toJson(storicoList);
 
-		String storicoJson = gson.toJson(storicoList);
-		mav.addObject("storico", storicoJson);
+		// Alert alert = new Alert();
+		// alert.setDescription("desc");
+		// alert.setSeverity(Severity.HIGH);
+		// alert.setTimestamp(new Date());
+		// alert.setTitle("title");
+		// storicoList.add(alert);
 
-		//String alertJson = gson.toJson(alertList);
+		mav.addObject("storico", storicoList);
+
+		// String alertJson = gson.toJson(alertList);
 		mav.addObject("alerts", alertList);
 
 		return mav;
@@ -59,22 +64,22 @@ public class IndexController {
 		dc.insert(raw);
 		// return dc.getEvents();
 	}
-	
+
 	@RequestMapping(value = "/alarms", method = RequestMethod.GET)
 	public ModelAndView alarmsView(ModelMap model) {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("alarms");
 
-//		List<Alert> storicoList = dc.getAlertList();
-//		List<Alert> alertList = dc.getAlertList(5);
-//
-//		Gson gson = new Gson();
-//
-//		String storicoJson = gson.toJson(storicoList);
-//		mav.addObject("storico", storicoJson);
-//
-//		//String alertJson = gson.toJson(alertList);
-//		mav.addObject("alerts", alertList);
+		// List<Alert> storicoList = dc.getAlertList();
+		// List<Alert> alertList = dc.getAlertList(5);
+		//
+		// Gson gson = new Gson();
+		//
+		// String storicoJson = gson.toJson(storicoList);
+		// mav.addObject("storico", storicoJson);
+		//
+		// //String alertJson = gson.toJson(alertList);
+		// mav.addObject("alerts", alertList);
 
 		return mav;
 	}
