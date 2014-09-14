@@ -39,8 +39,8 @@ public class IndexController {
 		String storicoJson = gson.toJson(storicoList);
 		mav.addObject("storico", storicoJson);
 
-		String alertJson = gson.toJson(alertList);
-		mav.addObject("alerts", alertJson);
+		//String alertJson = gson.toJson(alertList);
+		mav.addObject("alerts", alertList);
 
 		return mav;
 	}
