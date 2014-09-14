@@ -1,10 +1,7 @@
 package net.tinvention.server.model;
 
-import org.bson.types.ObjectId;
 
-public class DataRaw{
-
-	private ObjectId id;
+public class DataRaw extends BaseModel {
 
 	private EventType type;
 	private float value;
@@ -12,14 +9,6 @@ public class DataRaw{
 	private int accY;
 	private int accZ;
 	private double timestamp;
-
-	public ObjectId getId() {
-		return id;
-	}
-
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
 
 	public EventType getType() {
 		return type;

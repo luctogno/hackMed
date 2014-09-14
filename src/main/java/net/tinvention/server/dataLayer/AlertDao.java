@@ -3,12 +3,15 @@ package net.tinvention.server.dataLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.EventType;
+import net.tinvention.server.model.Severity;
 
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -16,20 +19,14 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
 @Repository
-public class DataRawDao extends AbstractMongoDao<DataRaw> {
+public class AlertDao extends AbstractMongoDao<Alert> {
 
-	private final String dataRawCollectionName = "dataRaw";
-
-	@Override
-	public String getDataRawCollectionName() {
-		return dataRawCollectionName;
-	}
-
+	private final String dataRawCollectionName = "alert";
 	private final String dataAnalizedCollectionName = "dataAnalized";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	public DataRaw GetDataRawForId(ObjectId id) {
+	public Alert GetDataRawForId(ObjectId id) {
 		try {
 			return fromMongo(mongoConnect(dataRawCollectionName).findOne(id));
 		} catch (MongoException e) {
@@ -38,11 +35,11 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 		}
 	}
 
-	public List<DataRaw> GetDataRaw() {
+	public List<Alert> GetDataRaw() {
 		try {
 
 			DBCursor cursor = mongoConnect(dataRawCollectionName).find();
-			List<DataRaw> toReturn = new ArrayList<DataRaw>();
+			List<Alert> toReturn = new ArrayList<Alert>();
 
 			while (cursor.hasNext()) {
 				DBObject obj = cursor.next();
@@ -57,16 +54,13 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 		}
 	}
 
-	public List<DataRaw> GetDataRaw(EventType type, int number) {
+	public List<Alert> GetDataRaw(int number) {
 		try {
-
-			BasicDBObject example = new BasicDBObject();
 			BasicDBObject sort = new BasicDBObject();
-			example.put("type", type.name());
 			sort.put("timestamp", -1);
-			DBCursor cursor = mongoConnect(dataRawCollectionName).find(example)
+			DBCursor cursor = mongoConnect(dataRawCollectionName).find()
 					.sort(sort).limit(number);
-			List<DataRaw> toReturn = new ArrayList<DataRaw>();
+			List<Alert> toReturn = new ArrayList<Alert>();
 
 			while (cursor.hasNext()) {
 				DBObject obj = cursor.next();
@@ -82,52 +76,44 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 	}
 
 	@Override
-	protected DBObject toMongo(DataRaw data) {
+	protected DBObject toMongo(Alert data) {
 		DBObject obj = new BasicDBObject();
 
 		obj.put("_id", data.getId());
-		obj.put("accX", data.getAccX());
-		obj.put("accY", data.getAccY());
-		obj.put("accZ", data.getAccZ());
+		obj.put("description", data.getDescription());
+		obj.put("severity", data.getSeverity().name());
 		obj.put("timestamp", data.getTimestamp());
-		obj.put("type", data.getType().name());
-		obj.put("value", data.getValue());
+		obj.put("title", data.getTitle());
 
 		return obj;
 	}
 
 	@Override
-	protected DataRaw fromMongo(DBObject objectDB) {
-		DataRaw data = new DataRaw();
+	protected Alert fromMongo(DBObject objectDB) {
+		Alert alert = new Alert();
 
 		BasicDBObject obj = (BasicDBObject) objectDB;
 
-		data.setId(obj.getObjectId("_id"));
+		alert.setId(obj.getObjectId("_id"));
 
-		int accX = obj.getInt("accX", Integer.MIN_VALUE);
-		if (accX != Integer.MIN_VALUE) {
-			data.setAccX(accX);
+		String severity = obj.getString("description");
+		if (!StringUtils.isEmpty(severity)) {
+			alert.setSeverity(Severity.valueOf(severity));
 		}
+		alert.setTimestamp(obj.getDate("timestamp"));
+		alert.setTitle(obj.getString("title"));
 
-		int accY = obj.getInt("accY", Integer.MIN_VALUE);
-		if (accY != Integer.MIN_VALUE) {
-			data.setAccY(accY);
-		}
+		return alert;
+	}
 
-		int accZ = obj.getInt("accZ", Integer.MIN_VALUE);
-		if (accZ != Integer.MIN_VALUE) {
-			data.setAccZ(accZ);
-		}
-
-		data.setTimestamp(obj.getDouble("timestamp"));
-
-		data.setType(EventType.valueOf(obj.getString("type")));
-
-		double value = obj.getDouble("value", Double.MIN_VALUE);
-		if (value != Double.MIN_VALUE) {
-			data.setValue(new Float(value));
-		}
-
-		return data;
+	@Override
+	public String getDataRawCollectionName() {
+		return dataRawCollectionName;
+	}
+	
+	@Override
+	public void InsertData(List<Alert> list) {
+		// TODO Auto-generated method stub
+		
 	}
 }
