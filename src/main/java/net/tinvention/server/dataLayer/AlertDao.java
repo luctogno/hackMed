@@ -58,7 +58,7 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 			BasicDBObject sort = new BasicDBObject();
 			sort.put("timestamp", -1);
 			DBCursor cursor = mongoConnect(dataRawCollectionName).find()
-					.sort(sort);
+					.sort(sort).limit(number);
 			List<Alert> toReturn = new ArrayList<Alert>();
 
 			while (cursor.hasNext()) {
@@ -66,7 +66,7 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 				toReturn.add(fromMongo(obj));
 			}
 
-			return toReturn.subList(toReturn.size() - number, toReturn.size());
+			return toReturn;
 
 		} catch (MongoException e) {
 			logger.error("mongo exception - " + e.getMessage());

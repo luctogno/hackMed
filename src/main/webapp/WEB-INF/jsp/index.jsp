@@ -29,10 +29,10 @@
  							<div class="panel panel-danger">	
 						</c:if>
 						<div class="panel-heading">
-							    <h3 class="panel-title"><span style="float:left;"><c:out value="${listVar.timestamp}"/></span><span style="float:right;"><c:out value="${listVar.title}"/></h3>
+							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
 							  </div>
 							  <div class="panel-body">
-							    <span style="float:right;"><c:out value="${listVar.description}"/></span>
+							    <span style="float:left;"><c:out value="${listVar.timestamp}"/></span><span style="float:right;"><c:out value="${listVar.description}"/></span>
 							  </div>
 							 </div>
 					</c:forEach>
