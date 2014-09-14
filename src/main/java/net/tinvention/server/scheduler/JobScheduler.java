@@ -4,7 +4,7 @@ package net.tinvention.server.scheduler;
 import java.util.List;
 
 import net.tinvention.server.businessLayer.DataManager;
-import net.tinvention.server.model.Event;
+import net.tinvention.server.model.DataRaw;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -20,7 +20,7 @@ public class JobScheduler {
 	
 	@Scheduled(fixedRate=5000) //millisecondi
 	public void getEventsAndStartAnalysys() {
-		List<List<Event>> events = dm.getEventsToBeAggregated();
+		List<List<DataRaw>> events = dm.getEventsToBeAggregated();
 		dm.aggregateEvents(events);
 	}
 }
