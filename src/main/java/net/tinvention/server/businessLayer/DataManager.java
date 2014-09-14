@@ -12,8 +12,10 @@ import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.EventType;
 import net.tinvention.server.utils.PeakDetector;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class DataManager {
@@ -98,20 +100,21 @@ public class DataManager {
 			misure.add(e.getValue());
 		}
 
-		PeakDetector peakDetector = new PeakDetector((Float[])misure.toArray());
+		PeakDetector peakDetector = new PeakDetector(misure.toArray(new Float[0]));
 		peakDetector.process(64*3, (float)0.10);
 		List<Integer> peaks = peakDetector.getPeaksPos();
+		if(peaks != null){
 		Collections.sort(peaks);
-		
-		for(int i =1; i<peaks.size(); i++){
-			if(peaks.get(i-1) - peaks.get(i) > 15*64){
-				
-				Alert alert = new Alert();
-				alert.setTimestamp(new Date());
-				alert.setTitle("Apnea");
-				alert.setDescription("ATTENZIONE: Sei entrato in apnea");
-				
-				alertList.add(alert);
+			for(int i =1; i<peaks.size(); i++){
+				if(peaks.get(i-1) - peaks.get(i) > 15*64){
+					
+					Alert alert = new Alert();
+					alert.setTimestamp(new Date());
+					alert.setTitle("Apnea");
+					alert.setDescription("ATTENZIONE: Sei entrato in apnea");
+					
+					alertList.add(alert);
+				}
 			}
 		}
 		
