@@ -10,6 +10,7 @@ import net.tinvention.server.dataLayer.DataRawDao;
 import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.EventType;
+import net.tinvention.server.model.Severity;
 import net.tinvention.server.utils.PeakDetector;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -25,6 +26,9 @@ public class DataManager {
 	
 	@Autowired
 	private AlertDao dmAlert;
+	
+	private double timeStampACC=0;
+	private double timeStampLastSpasmo=0;
 
 	public List<Alert> getAlertList(){
 		return dmAlert.GetDataRaw();
@@ -38,13 +42,18 @@ public class DataManager {
 		List<List<DataRaw>> resultList = new ArrayList<>();
 		
 		List<DataRaw> ACC = new ArrayList<>();
-		for(DataRaw raw : dm.GetDataRaw(EventType.ACC, 50)){ //Ultimi 50 elementi per tipo
+		for(DataRaw raw : dm.GetDataRawAfter(EventType.ACC, timeStampACC)){ //Ultimi 50 elementi per tipo
 			DataRaw ev = new DataRaw();
 			ev.setType(EventType.ACC);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setAccX(raw.getAccX());
 			ev.setAccY(raw.getAccY());
 			ev.setAccZ(raw.getAccZ());
+			ACC.add(ev);
+			
+		}
+		if(ACC !=null && !CollectionUtils.isEmpty(ACC)){
+			timeStampACC = ACC.get(0).getTimestamp();
 		}
 		resultList.add(ACC);
 		
@@ -54,6 +63,7 @@ public class DataManager {
 			ev.setType(EventType.TEMP);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
+			TEMP.add(ev);
 		}
 		resultList.add(TEMP);
 		
@@ -63,6 +73,7 @@ public class DataManager {
 			ev.setType(EventType.BVP);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
+			BVP.add(ev);
 		}
 		resultList.add(BVP);
 		
@@ -72,6 +83,7 @@ public class DataManager {
 			ev.setType(EventType.GSR);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
+			GSR.add(ev);
 		}
 		resultList.add(GSR);
 		
@@ -81,6 +93,7 @@ public class DataManager {
 			ev.setType(EventType.IBI);
 			ev.setTimestamp(raw.getTimestamp());
 			ev.setValue(raw.getValue());
+			IBI.add(ev);
 		}
 		resultList.add(IBI);
 		
@@ -116,7 +129,34 @@ public class DataManager {
 					alert.setTimestamp(new Date());
 					alert.setTitle("Apnea");
 					alert.setDescription("ATTENZIONE: Sei entrato in apnea");
-					
+					alert.setSeverity(Severity.HIGH);
+					alertList.add(alert);
+				}
+			}
+		}
+		
+		//SPASMI
+		List<Float> misureSpasmiX = new ArrayList<>();
+		List<Float> misureSpasmiY = new ArrayList<>();
+		List<Float> misureSpasmiZ = new ArrayList<>();
+		List<Double> timestamps = new ArrayList<>();
+		float soglia = 65;
+		for(DataRaw e: eventToBeAggregated.get(0)){
+			timestamps.add(e.getTimestamp());
+			misureSpasmiX.add((float) e.getAccX());
+			misureSpasmiY.add((float) e.getAccY());
+			misureSpasmiZ.add((float) e.getAccZ());
+		}
+		
+		for(int i=1; i<misureSpasmiX.size(); i++){
+			if(misureSpasmiX.get(i)>soglia || misureSpasmiY.get(i)>soglia || misureSpasmiZ.get(i)>soglia){
+				if(timestamps.get(i) - timeStampLastSpasmo < 3600000){
+					timeStampLastSpasmo = timestamps.get(i);
+					Alert alert = new Alert();
+					alert.setTimestamp(new Date(timestamps.get(i).longValue()));
+					alert.setTitle("Spasmo");
+					alert.setDescription("ATTENZIONE: Hai avuto uno spasmo");
+					alert.setSeverity(Severity.MEDIUM);
 					alertList.add(alert);
 				}
 			}
