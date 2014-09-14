@@ -22,7 +22,6 @@ import com.mongodb.MongoException;
 public class AlertDao extends AbstractMongoDao<Alert> {
 
 	private final String dataRawCollectionName = "alert";
-	private final String dataAnalizedCollectionName = "dataAnalized";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 

@@ -24,9 +24,7 @@ public class DataRawDao extends AbstractMongoDao<DataRaw> {
 	public String getDataRawCollectionName() {
 		return dataRawCollectionName;
 	}
-
-	private final String dataAnalizedCollectionName = "dataAnalized";
-
+	
 	private final Logger logger = Logger.getLogger(this.getClass());
 
 	public DataRaw GetDataRawForId(ObjectId id) {
