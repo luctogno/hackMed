@@ -14,41 +14,27 @@
 	<div class="tab-content">
 				<div class="tab-pane active" id="home">
 					<div class="column1 column">
-						<img id="imageSmile" src="img/ok.png" style="width:100%; height: 100%; padding: auto;" onClick="changeImage();"/>
+						<img id="imageSmile" src="img/sad.png" style="width:100%; height: 100%; padding: auto;" onClick="changeImage();"/>
 					</div>
 					<div class="column2 columnBig">
 						<ul class="list-group">
-						<c:forEach var="listVar" items="${alarms}"> //add the model attribute of list in items
+						<c:forEach var="listVar" items="${alerts}"> 
 						<c:if test="${listVar.severity eq 'LOW'}">
  							<div class="panel panel-info">
- 							<div class="panel-heading">
-							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
-							  </div>
-							  <div class="panel-body">
-							    <c:out value="${listVar.description}"/>
-							  </div>
-							 </div>
 						</c:if>
 						<c:if test="${listVar.severity eq 'MEDIUM'}">
 						<div class="panel panel-warning">
- 							<div class="panel-heading">
-							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
-							  </div>
-							  <div class="panel-body">
-							    <c:out value="${listVar.description}"/>
-							  </div>
-							 </div>
 						</c:if>
 						<c:if test="${listVar.severity eq 'HIGH'}">
- 							<div class="panel panel-danger">
- 							<div class="panel-heading">
-							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
+ 							<div class="panel panel-danger">	
+						</c:if>
+						<div class="panel-heading">
+							    <h3 class="panel-title"><span style="float:left;"><c:out value="${listVar.timestamp}"/></span><span style="float:right;"><c:out value="${listVar.title}"/></h3>
 							  </div>
 							  <div class="panel-body">
-							    <c:out value="${listVar.description}"/>
+							    <span style="float:right;"><c:out value="${listVar.description}"/></span>
 							  </div>
 							 </div>
-						</c:if> 
 					</c:forEach>
 						</ul>
 					</div>
@@ -73,7 +59,7 @@
 		var data = [];
 		<c:forEach var="alert" items="${storico}">
 			data.push({
-				'start' : new Date(),
+				'start' : new Date('${alert.timestampYear}', '${alert.timestampMonth - 1}', '${alert.timestampDay}'),
 				'content' : '${alert.title}',
 				'id' : '${alert.id}',
 				'description' : '${alert.description}'
@@ -111,7 +97,7 @@
 	}
 		
 		function changeImage(){
-			$("#imageSmile").attr("src","img/sad.png");
+			$("#imageSmile").attr("src","img/ok.png");
 		}
     </script>
       

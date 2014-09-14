@@ -651,6 +651,10 @@ ul.contact li a.icon-rss:before
 	
 	text-align: center;
 }
+.tab-content
+{
+	margin : 50px;
+}
 
 #featured-wrapper:first-child{
 	margin-bottom: 10px;
@@ -716,7 +720,7 @@ ul.contact li a.icon-rss:before
 }
 
 .columnBig{
-	width: 750px;
+	width: 600px;
 }
 
 .column1,  .column2
