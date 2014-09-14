@@ -20,7 +20,7 @@ public class JobScheduler {
 	
 	@Scheduled(fixedRate=5000) //millisecondi
 	public void getEventsAndStartAnalysys() {
-		List<Event> events = dm.getEventsToBeAggregated();
+		List<List<Event>> events = dm.getEventsToBeAggregated();
 		dm.aggregateEvents(events);
 	}
 }
