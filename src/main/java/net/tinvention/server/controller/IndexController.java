@@ -63,4 +63,23 @@ public class IndexController {
 		dc.insert(raw);
 		// return dc.getEvents();
 	}
+	
+	@RequestMapping(value = "/alarms", method = RequestMethod.GET)
+	public ModelAndView alarmsView(ModelMap model) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("alarms");
+
+//		List<Alert> storicoList = dc.getAlertList();
+//		List<Alert> alertList = dc.getAlertList(5);
+//
+//		Gson gson = new Gson();
+//
+//		String storicoJson = gson.toJson(storicoList);
+//		mav.addObject("storico", storicoJson);
+//
+//		//String alertJson = gson.toJson(alertList);
+//		mav.addObject("alerts", alertList);
+
+		return mav;
+	}
 }

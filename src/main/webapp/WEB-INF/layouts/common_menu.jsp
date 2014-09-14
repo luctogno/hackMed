@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:url value="/index.html" var="menuitem1"/>
-<c:url value="/messaggiView" var="menuitem2"/>
-<c:url value="/ssh" var="menuitem3"/>
+<c:url value="/alarms.html" var="menuitem2"/>
 
 <div id="menu">
 	<ul>

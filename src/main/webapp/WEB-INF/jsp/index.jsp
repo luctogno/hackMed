@@ -20,13 +20,34 @@
 						<ul class="list-group">
 						<c:forEach var="listVar" items="${alarms}"> //add the model attribute of list in items
 						<c:if test="${listVar.severity eq 'LOW'}">
- 							<li class="list-group-item list-group-item-info"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+ 							<div class="panel panel-info">
+ 							<div class="panel-heading">
+							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
+							  </div>
+							  <div class="panel-body">
+							    <c:out value="${listVar.description}"/>
+							  </div>
+							 </div>
 						</c:if>
 						<c:if test="${listVar.severity eq 'MEDIUM'}">
- 							<li class="list-group-item list-group-item-warning"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+						<div class="panel panel-warning">
+ 							<div class="panel-heading">
+							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
+							  </div>
+							  <div class="panel-body">
+							    <c:out value="${listVar.description}"/>
+							  </div>
+							 </div>
 						</c:if>
 						<c:if test="${listVar.severity eq 'HIGH'}">
- 							<li class="list-group-item list-group-item-danger"><c:out value="${listVar.title}"/> - <c:out value="${listVar.description}"/></li>
+ 							<div class="panel panel-danger">
+ 							<div class="panel-heading">
+							    <h3 class="panel-title"><c:out value="${listVar.title}"/></h3>
+							  </div>
+							  <div class="panel-body">
+							    <c:out value="${listVar.description}"/>
+							  </div>
+							 </div>
 						</c:if> 
 					</c:forEach>
 						</ul>

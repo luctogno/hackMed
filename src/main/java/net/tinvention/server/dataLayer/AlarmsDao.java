@@ -3,6 +3,7 @@ package net.tinvention.server.dataLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.tinvention.server.model.Alarms;
 import net.tinvention.server.model.Alert;
 import net.tinvention.server.model.DataRaw;
 import net.tinvention.server.model.EventType;
@@ -19,13 +20,13 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 
 @Repository
-public class AlertDao extends AbstractMongoDao<Alert> {
+public class AlarmsDao extends AbstractMongoDao<Alarms> {
 
-	private final String dataRawCollectionName = "dataAnalized";
+	private final String dataRawCollectionName = "alarms";
 
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	public Alert GetDataRawForId(ObjectId id) {
+	public Alarms GetDataRawForId(ObjectId id) {
 		try {
 			return fromMongo(mongoConnect(dataRawCollectionName).findOne(id));
 		} catch (MongoException e) {
@@ -34,11 +35,11 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		}
 	}
 
-	public List<Alert> GetDataRaw() {
+	public List<Alarms> GetDataRaw() {
 		try {
 
 			DBCursor cursor = mongoConnect(dataRawCollectionName).find();
-			List<Alert> toReturn = new ArrayList<Alert>();
+			List<Alarms> toReturn = new ArrayList<Alarms>();
 
 			while (cursor.hasNext()) {
 				DBObject obj = cursor.next();
@@ -53,13 +54,13 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 		}
 	}
 
-	public List<Alert> GetDataRaw(int number) {
+	public List<Alarms> GetDataRaw(int number) {
 		try {
 			BasicDBObject sort = new BasicDBObject();
 			sort.put("timestamp", -1);
 			DBCursor cursor = mongoConnect(dataRawCollectionName).find()
 					.sort(sort).limit(number);
-			List<Alert> toReturn = new ArrayList<Alert>();
+			List<Alarms> toReturn = new ArrayList<Alarms>();
 
 			while (cursor.hasNext()) {
 				DBObject obj = cursor.next();
@@ -75,34 +76,29 @@ public class AlertDao extends AbstractMongoDao<Alert> {
 	}
 
 	@Override
-	protected DBObject toMongo(Alert data) {
+	protected DBObject toMongo(Alarms data) {
 		DBObject obj = new BasicDBObject();
 
 		obj.put("_id", data.getId());
 		obj.put("description", data.getDescription());
-		obj.put("severity", data.getSeverity().name());
-		obj.put("timestamp", data.getTimestamp());
 		obj.put("title", data.getTitle());
-
+		obj.put("attivo", data.getAttivo());
 		return obj;
 	}
 
 	@Override
-	protected Alert fromMongo(DBObject objectDB) {
-		Alert alert = new Alert();
+	protected Alarms fromMongo(DBObject objectDB) {
+		Alarms alert = new Alarms();
 
 		BasicDBObject obj = (BasicDBObject) objectDB;
 
 		alert.setId(obj.getObjectId("_id"));
 
-		alert.setDescription(obj.getString("description"));
+		obj.getString("description");
 		
-		String severity = obj.getString("severity");
-		if (!StringUtils.isEmpty(severity)) {
-			alert.setSeverity(Severity.valueOf(severity));
-		}
-		alert.setTimestamp(obj.getDate("timestamp"));
 		alert.setTitle(obj.getString("title"));
+		
+		alert.setAttivo(obj.getBoolean("attivo"));
 
 		return alert;
 	}
