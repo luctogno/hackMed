@@ -50,12 +50,12 @@
 		function drawVisualization() {
 		// Create and populate a data table.
 		var data = [];
-		<c:forEach var="alert" items="${alertList}">
+		<c:forEach var="alert" items="${storico}">
 			data.push({
-				'start' : new Date(${intervento.getRealCreated().getYear() + 1900}, ${intervento.getRealCreated().getMonth()}, ${intervento.getRealCreated().getDate()}),
-				'content' : '${intervento.getName()}',
-				'id' : '${intervento.getId()}',
-				'description' : '${intervento.getDescription()}'
+				'start' : new Date(),
+				'content' : '${alert.title}',
+				'id' : '${alert.id}',
+				'description' : '${alert.description}'
 				// Optional: a field 'end'
 				// Optional: a field 'group'
 				// Optional: a field 'className'
