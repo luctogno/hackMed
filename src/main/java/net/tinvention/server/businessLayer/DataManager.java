@@ -30,6 +30,10 @@ public class DataManager {
 		return dmAlert.GetDataRaw();
 	}
 
+	public List<Alert> getAlertList(int limit) {
+		return dmAlert.GetDataRaw(limit);
+	}
+
 	public List<List<DataRaw>> getEventList(){
 		List<List<DataRaw>> resultList = new ArrayList<>();
 		
