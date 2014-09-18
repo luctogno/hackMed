@@ -59,7 +59,7 @@
 		var data = [];
 		<c:forEach var="alert" items="${storico}">
 			data.push({
-				'start' : new Date('${alert.timestampYear}', '${alert.timestampMonth - 1}', '${alert.timestampDay}'),
+				'start' : new Date('${alert.timestampYear}', '${alert.timestampMonth}', '${alert.timestampDay}'),
 				'content' : '${alert.title}',
 				'id' : '${alert.id}',
 				'description' : '${alert.description}'
@@ -74,7 +74,8 @@
 		var options = {
 		  "width":  "100%",
 		  "height": "400px",
-		  "style": "box" // optional
+		  "style": "box" , 
+		  "cluster" : "true"// optional
 		};
 		
 		// Instantiate our timeline object.

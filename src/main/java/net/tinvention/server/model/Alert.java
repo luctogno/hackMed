@@ -68,4 +68,9 @@ public class Alert extends BaseModel {
 		c.setTime(timestamp);
 		return c.get(Calendar.DAY_OF_MONTH);
 	}
+	
+	public long getTimestampMillis()
+	{
+	return timestamp.getTime();
+	}
 }
